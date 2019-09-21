@@ -1,0 +1,36 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int maximum_diff(int arr[],int n)
+{
+    int max_diff    = INT_MIN;
+    /*
+        parse the array from start , keep track of minimum value 
+        encountered so far , and calculate the difference between 
+        current element and min_so_far , and keep a variable to 
+        keep track of maximum of ( current_element - min_so_far) 
+    */
+    int min_so_far  = arr[0];
+    for(int i = 1; i < n; i++)
+    {
+        if( arr[i] < min_so_far )
+        {
+            min_so_far = arr[i];
+        }
+        
+        if( max_diff < (arr[i] - min_so_far) )
+        {
+            max_diff = arr[i] - min_so_far;
+        }
+    }
+    return max_diff;
+}
+
+int main()
+{
+    int arr[] = {11,12,10,15,16,3,7,8,0};
+    int size  = sizeof(arr)/sizeof(arr[0]);
+    int res = maximum_diff(arr,size);
+    cout <<"Max Difference : " << res <<"\n";
+    return 0;
+}
