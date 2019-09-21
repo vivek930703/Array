@@ -1,0 +1,61 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+/*
+    sort the array which consists of '0' , '1' and '2'.
+    parsing of array is done only once. 
+    T.C = O(n);
+*/
+
+void swap(int *a,int *b)
+{
+    int temp = *b;
+    *b = *a;
+    *a = temp;
+}
+
+void sort_the_array(int arr[],int n)
+{
+    int low  = 0;
+    int mid  = 0;
+    int high = n - 1;
+    while( mid <= high)
+    {
+        switch(arr[mid])
+        {
+            /*
+                logic:
+                low  : it is used to handle '0'
+                mid  : it is used to handle '1'
+                high : it is used to handle '2'
+                
+                if mid = '0' , so we have to swap it with low
+                if mid = '1' , so just move ahead.
+                if mid = '2' , so we have to swap it with high and decrement high.
+            */
+            case 0:
+                    swap(&arr[low],&arr[mid]);
+                    low++;
+                    mid++;
+                    break;
+            case 1:
+                    mid++;
+                    break;
+            case 2:
+                    swap(&arr[high],&arr[mid]);
+                    //mid++;
+                    high--;
+                    break;
+        }
+    }
+}
+
+int main() {
+    int arr[] = {0,1,2,0,1,2,0,0,0,1,1,1,2,2,2,0,1,0,1,2,2,0,0,1};
+    int size  = sizeof(arr) / sizeof(arr[0]);
+    sort_the_array(arr,size);
+    for(int i = 0; i < size; i++)
+        cout << arr[i] <<" ";
+    cout <<"\n";
+	return 0;
+}
