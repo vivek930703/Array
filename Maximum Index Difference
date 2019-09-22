@@ -1,0 +1,68 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+/*
+    Maximise (j-i) such that arr[j] > arr[i].
+    write a efficient code to maximise (j-i);
+    logic:
+        keep track of maximum and minimum value at each point of the array.
+        and then calculate the maximum (j-i) by parsing both the array.
+        
+    T.C : O(n);
+    S.C : O(n); //infact 2 * n for storing maximum and minimum at each point.
+    
+*/
+
+int maximum_index_diff(int arr[],int size)
+{
+    int *min_arr = (int *)malloc( sizeof(int) * size);
+    int *max_arr = (int *)malloc( sizeof(int) * size);
+    
+    int min_so_far = arr[0];
+    int max_so_far = arr[size-1];
+    min_arr[0]     = min_so_far;
+    max_arr[size-1]= max_so_far;
+    
+    for(int i = 1; i < size; i++)
+    {
+        min_arr[i] = min(min_so_far,arr[i]);
+        if( arr[i] < min_so_far )
+            min_so_far = arr[i];
+    }
+    
+    for(int i = size - 2; i >= 0; i--)
+    {
+        max_arr[i] = max(max_so_far,arr[i]);
+        if( arr[i] > max_so_far )
+            max_so_far = arr[i];
+    }
+    
+    int max_idx_diff = INT_MIN;
+    int i = 0;
+    int j = 0;
+    for(; i < size && j < size;)
+    {
+        
+        if( min_arr[i] < max_arr[j] )
+        {
+            if( (j-i) > max_idx_diff )
+            {
+                max_idx_diff = (j-i);
+            }
+            j++;
+        }
+        else
+            i++;
+            
+    }
+    return max_idx_diff;
+}
+
+int main()
+{
+    int arr[] = {45,43,22,19,5,0,1,2,3,7,9,10,15};
+    int size  = sizeof(arr) / sizeof(arr[0]);
+    int res   = maximum_index_diff(arr,size);
+    cout <<"Maximum index diff : " << res <<"\n"; 
+    return 0;
+}
